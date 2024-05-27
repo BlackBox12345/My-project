@@ -8,6 +8,7 @@ TagManager:
   - jeep
   - Update
   - Barier
+  - Grass
   layers:
   - Default
   - TransparentFX

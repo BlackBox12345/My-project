@@ -4,10 +4,12 @@ public class ObjectSpawner : MonoBehaviour
 {
     public GameObject[] objectPrefabs; // Массив префабов объектов для спавна
     public float minSpawnInterval = 1f; // Минимальный интервал спавна в секундах
-    public float maxSpawnInterval = 10f; // Максимальный интервал спавна в секундах
+    public float maxSpawnInterval = 15f; // Максимальный интервал спавна в секундах
 
     private float timer; // Таймер для отслеживания времени до следующего спавна
     private float spawnInterval; // Интервал спавна для текущего объекта
+
+    private static bool isSpawning = false; // Флаг для проверки, идет ли уже спавн
 
     void Start()
     {
@@ -17,20 +19,27 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
-        // Увеличиваем таймер
-        timer += Time.deltaTime;
-
-        // Если прошло достаточно времени, чтобы создать новый объект
-        if (timer >= spawnInterval)
+        // Если не идет уже спавн, начинаем новый цикл спавна
+        if (!isSpawning)
         {
-            // Создаем новый объект
-            SpawnObject();
+            // Увеличиваем таймер
+            timer += Time.deltaTime;
 
-            // Устанавливаем новый случайный интервал спавна
-            SetRandomSpawnInterval();
+            // Если прошло достаточно времени, чтобы создать новый объект
+            if (timer >= spawnInterval)
+            {
+                // Начинаем спавн
+                isSpawning = true;
 
-            // Сбрасываем таймер
-            timer = 0f;
+                // Создаем новый объект
+                SpawnObject();
+
+                // Устанавливаем новый случайный интервал спавна
+                SetRandomSpawnInterval();
+
+                // Сбрасываем таймер
+                timer = 0f;
+            }
         }
     }
 
@@ -47,5 +56,8 @@ public class ObjectSpawner : MonoBehaviour
 
         // Создаем новый объект из выбранного префаба в текущей позиции спавна
         Instantiate(selectedPrefab, transform.position, Quaternion.identity);
+
+        // Останавливаем спавн
+        isSpawning = false;
     }
 }

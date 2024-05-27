@@ -22,7 +22,9 @@ public class Movement : MonoBehaviour
         MoveJeep();
 
         // Удаляем объекты, которые вышли за пределы области камеры
-        //RemoveOutOfBoundsObjects();
+        MoveBarriers();
+
+        MoveGrass();
     }
 
     void MoveCubes()
@@ -30,6 +32,25 @@ public class Movement : MonoBehaviour
         GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cube");
 
         foreach (GameObject cube in cubes)
+        {
+            cube.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+    }
+    void MoveGrass()
+    {
+        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Grass");
+
+        foreach (GameObject cube in cubes)
+        {
+            cube.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+    }
+
+    void MoveBarriers()
+    {
+        GameObject[] barriers = GameObject.FindGameObjectsWithTag("Barier");
+
+        foreach (GameObject cube in barriers)
         {
             cube.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }

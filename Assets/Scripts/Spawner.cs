@@ -7,7 +7,6 @@ public class Spawner : MonoBehaviour
     public GameObject prefab;
     public float t = 0;
 
-    // Update is called once per frame
     void Update()
     {
         t = t + Time.deltaTime;
